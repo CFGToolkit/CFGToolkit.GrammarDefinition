@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace CFGToolkit.GrammarDefinition.Structure
 {
-    public class Expressions : IEnumerable<Expression>
+    public class Alternatives : IEnumerable<Expression>
     {
         private List<Expression> _alternatives { get; set; } = new List<Expression>();
 
-        public Expressions()
+        public Alternatives()
         {
-
         }
-        public Expressions(params object[] alternatives)
+
+        public Alternatives(params object[] alternatives)
         {
             foreach (var item in alternatives)
             {
@@ -26,6 +26,7 @@ namespace CFGToolkit.GrammarDefinition.Structure
                 }
             }
         }
+
         public Expression this[int i]
         {
             get { return _alternatives[i]; }
@@ -44,9 +45,9 @@ namespace CFGToolkit.GrammarDefinition.Structure
             return _alternatives.GetEnumerator();
         }
 
-        public Expressions Clone()
+        public Alternatives Clone()
         {
-            return new Expressions(new List<Expression>(this));
+            return new Alternatives(new List<Expression>(this));
         }
 
         public void AddRange(IEnumerable<Expression> alternatives)

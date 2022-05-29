@@ -2,7 +2,7 @@
 {
     public class OptionalExpression : ISymbol
     {
-        public Expressions Inside { get; set; }
+        public Alternatives Inside { get; set; }
 
         public override string ToString()
         {

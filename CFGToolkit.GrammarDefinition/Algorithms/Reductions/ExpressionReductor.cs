@@ -58,7 +58,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Reductions
 
         public abstract IEnumerable<Expression> TransformAlternative(Production production, Queue<Production> queue, Expression alternative);
 
-        protected bool IsSingleAlready(Expressions inside)
+        protected bool IsSingleAlready(Alternatives inside)
         {
             return inside.Count == 1 && inside[0].Symbols.Count == 1 && inside[0].Symbols[0] is ProductionIdentifier;
         }

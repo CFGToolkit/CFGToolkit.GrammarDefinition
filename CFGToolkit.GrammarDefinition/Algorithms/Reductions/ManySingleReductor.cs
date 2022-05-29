@@ -14,7 +14,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Reductions
                 if (symbol is ManyExpression many && !IsSingleAlready(many.Inside))
                 {
                     var newProductionIdentifier = new ProductionIdentifier(NameProvider.GetUniqueName(production.Name.Value + "_many"));
-                    newAlternative.Symbols.Add(new ManyExpression() { Inside = new Expressions(new Expression(newProductionIdentifier)) });
+                    newAlternative.Symbols.Add(new ManyExpression() { Inside = new Alternatives(new Expression(newProductionIdentifier)) });
 
                     var newProduction = new Production() { Name = newProductionIdentifier, Tags = production.Tags};
 

@@ -14,7 +14,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Reductions
                 if (symbol is OptionalExpression opt && !IsSingleAlready(opt.Inside))
                 {
                     var newProductionIdentifier = new ProductionIdentifier(NameProvider.GetUniqueName(production.Name.Value + "_optional"));
-                    newAlternative.Symbols.Add(new OptionalExpression() { Inside = new Expressions(new Expression(newProductionIdentifier)) });
+                    newAlternative.Symbols.Add(new OptionalExpression() { Inside = new Alternatives(new Expression(newProductionIdentifier)) });
 
                     var newProduction = new Production() { Name = newProductionIdentifier, Tags = new Dictionary<string, string>(production.Tags) };
 

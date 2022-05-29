@@ -60,7 +60,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Finders
             return empty;
         }
 
-        private bool HasEmpty(Expressions altenatives)
+        private bool HasEmpty(Alternatives altenatives)
         {
             return altenatives.Count == 0 || altenatives.Any(a => a.Symbols.Count == 0 || a.Symbols.Count == 1 && a.Symbols.Any(s => s is Empty));
         }

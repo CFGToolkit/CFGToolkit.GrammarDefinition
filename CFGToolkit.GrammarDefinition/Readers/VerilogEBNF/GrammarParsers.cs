@@ -56,10 +56,10 @@ namespace CFGToolkit.GrammarDefinition.Readers.VerilogEBNF
             }
         }
 
-        private static IParser<CharToken, Expressions> Expressions(Dictionary<string, string> tags)
+        private static IParser<CharToken, Alternatives> Expressions(Dictionary<string, string> tags)
             => Expression(tags)
                 .DelimitedBy(Parser.String("|").Token())
-                .Select(p => new Expressions(p));
+                .Select(p => new Alternatives(p));
 
         public static IParser<CharToken, KeyValuePair<string, string>> ProductionTag = (
             from start in Parser.Char('[')

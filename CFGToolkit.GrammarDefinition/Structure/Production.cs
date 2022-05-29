@@ -7,7 +7,7 @@ namespace CFGToolkit.GrammarDefinition.Structure
     {
         public ProductionIdentifier Name { get; set; }
 
-        public Expressions Alternatives { get; set; } = new Expressions();
+        public Alternatives Alternatives { get; set; } = new Alternatives();
 
         public Dictionary<string, string> Tags { get; set; } = new Dictionary<string, string>();
 
@@ -18,7 +18,7 @@ namespace CFGToolkit.GrammarDefinition.Structure
 
         public Production Clone()
         {
-            return new Production() { Name = Name, Tags = new Dictionary<string, string>(Tags), Alternatives = new Expressions(Alternatives.Select(exp => exp.Clone())) };
+            return new Production() { Name = Name, Tags = new Dictionary<string, string>(Tags), Alternatives = new Alternatives(Alternatives.Select(exp => exp.Clone())) };
         }
     }
 }

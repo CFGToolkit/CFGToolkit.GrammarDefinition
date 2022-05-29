@@ -61,16 +61,16 @@ namespace CFGToolkit.GrammarDefinition.Readers.W3CEBNF
         public static IParser<CharToken, ISymbol> AlternativeExpressionItem =
             (from _x1 in Item
              from _x2 in Parser.Char('?').TokenWithoutNewLines()
-             select (ISymbol)new OptionalExpression() { Inside = new Expressions(new Expression(_x1)) })
+             select (ISymbol)new OptionalExpression() { Inside = new Alternatives(new Expression(_x1)) })
             .XOr(
                 from _x1 in Item
                 from _x2 in Parser.Char('+').TokenWithoutNewLines()
-                select (ISymbol)new ManyExpression() { Inside = new Expressions(new Expression(_x1)), AtLeastOnce = true }
+                select (ISymbol)new ManyExpression() { Inside = new Alternatives(new Expression(_x1)), AtLeastOnce = true }
             )
             .XOr(
                 from _x1 in Item
                 from _x2 in Parser.Char('*').TokenWithoutNewLines()
-                select (ISymbol)new ManyExpression() { Inside = new Expressions(new Expression(_x1)), AtLeastOnce = false }
+                select (ISymbol)new ManyExpression() { Inside = new Alternatives(new Expression(_x1)), AtLeastOnce = false }
             )
             .XOr(
                 from _x1 in Item
@@ -79,10 +79,10 @@ namespace CFGToolkit.GrammarDefinition.Readers.W3CEBNF
 
         public static IParser<CharToken, List<ISymbol>> AlternativeExpression = AlternativeExpressionItem.TokenWithoutNewLines().Repeat(1, null);
 
-        public static IParser<CharToken, Expressions> Alternatives =
+        public static IParser<CharToken, Alternatives> Alternatives =
             AlternativeExpression
             .DelimitedBy(Parser.String("|").Token())
-            .Select(p => new Expressions(p.Select(r => new Expression(r))));
+            .Select(p => new Alternatives(p.Select(r => new Expression(r))));
 
         public static IParser<CharToken, Production> Statement =
             from _x1 in Identifier

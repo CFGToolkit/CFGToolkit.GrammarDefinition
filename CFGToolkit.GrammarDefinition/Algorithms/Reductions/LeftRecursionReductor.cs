@@ -35,7 +35,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Reductions
         {
             var production = result.Productions[productionToReplace];
             var alternatives = production.Alternatives.Clone();
-            production.Alternatives = new Expressions();
+            production.Alternatives = new Alternatives();
 
             foreach (var alternative in alternatives)
             {
@@ -45,7 +45,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Reductions
                     if (alternative.Symbols.First() is ProductionIdentifier p && p.Value == a_j)
                     {
                         found = true;
-                        var newAlternatives = new Expressions();
+                        var newAlternatives = new Alternatives();
                         foreach (var a_jAlternative in result.Productions[a_j].Alternatives)
                         {
                             var newExpression = new Expression(a_jAlternative.Symbols, alternative.Symbols.Skip(1));
