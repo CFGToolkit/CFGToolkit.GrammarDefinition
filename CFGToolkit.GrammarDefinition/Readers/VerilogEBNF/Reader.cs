@@ -5,6 +5,8 @@ namespace CFGToolkit.GrammarDefinition.Readers.VerilogEBNF
 {
     public class Reader : IReader
     {
+        public string FormatName => "VerilogEBNF";
+
         public Grammar Read(string txt)
         {
             var info = new GrammarInfo();
