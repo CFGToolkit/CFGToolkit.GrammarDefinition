@@ -13,7 +13,7 @@
     <PackageTags>parser csharp grammar cfg grammar-parser</PackageTags>
     <Authors>Marcin Gołębiowski</Authors>
     <Company>CFGToolkit</Company>
-    <Version>1.0.0-alpha-05</Version>
+    <Version>1.0.0-alpha-02</Version>
   </PropertyGroup>
 
   <ItemGroup>
