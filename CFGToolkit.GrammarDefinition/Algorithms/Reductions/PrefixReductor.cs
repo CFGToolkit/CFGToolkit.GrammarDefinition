@@ -36,7 +36,13 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Reductions
                         restProduction.Alternatives = new Alternatives();
                         foreach (var alt in production.Alternatives)
                         {
-                            restProduction.Alternatives.Add(new Expression(alt.Skip(1)));
+                            var newAlt = alt.Skip(1).ToList();
+                            if (newAlt.Count == 0)
+                            {
+                                newAlt.Add(new Empty());
+                            }
+
+                            restProduction.Alternatives.Add(new Expression(newAlt));
                         }
                         result.Add(restProduction);
 
