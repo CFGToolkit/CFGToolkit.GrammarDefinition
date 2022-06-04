@@ -30,7 +30,7 @@ namespace CFGToolkit.GrammarDefinition.Readers.VerilogEBNF
              from spaces1 in Parser.WhiteSpace.Many()
              from equal in Parser.String("::=")
              from spaces2 in Parser.WhiteSpace.Many()
-             from @else in Parser.Regex("((?!(\r?\n){2}).)+", RegexOptions.Singleline)
+             from @else in Parser.Regex("((?!(\r?\n){2}).)+", true, RegexOptions.Singleline)
              from lines in Parser.LineEnd.Many()
              select name).Named(nameof(Production));
 
