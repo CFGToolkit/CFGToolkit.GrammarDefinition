@@ -17,7 +17,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Reductions
                 var productionName = productions[i];
                 var production = result.Productions[productionName];
 
-                if (production.Alternatives.Count > 1 && production.Alternatives.All( alt => alt.Count >= 2))
+                if (production.Alternatives.Count > 1 && production.Alternatives.Any(alt => alt.Count >= 2))
                 {
                     var prefixes = new List<string>();
                     foreach (var alternative in production.Alternatives)
