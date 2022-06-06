@@ -1,7 +1,7 @@
 ﻿using CFGToolkit.ParserCombinator;
 using System.Linq;
 
-namespace CFGToolkit.GrammarDefinition.Readers.VerilogEBNF
+namespace CFGToolkit.GrammarDefinition.Readers.BNF
 {
     public class Reader : IReader
     {

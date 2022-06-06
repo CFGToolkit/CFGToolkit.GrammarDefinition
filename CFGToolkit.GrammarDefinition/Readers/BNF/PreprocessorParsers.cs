@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace CFGToolkit.GrammarDefinition.Readers.VerilogEBNF
+namespace CFGToolkit.GrammarDefinition.Readers.BNF
 {
     public class PreprocessorParsers
     {
         public static IParser<CharToken, string> Identifier = Parser.Regex(@"[$A-Z_a-z][\-0-9A-Z_a-z]*").Named(nameof(Identifier));
-        
+
         public static IParser<CharToken, KeyValuePair<string, string>> ProductionTag = (
             from start in Parser.Char('[')
             from name in Parser.AnyChar().Except(Parser.Char(']').Or(Parser.Char('='))).Many().Text()
             from end in Parser.Char(']')
-            select new KeyValuePair<string,string>(name, null))
+            select new KeyValuePair<string, string>(name, null))
             .Or(
                 from start in Parser.Char('[')
                 from name in Parser.AnyChar().Except(Parser.Char(']').Or(Parser.Char('='))).Many().Text()

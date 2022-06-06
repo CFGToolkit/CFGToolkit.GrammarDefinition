@@ -4,7 +4,7 @@ using CFGToolkit.ParserCombinator.Input;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CFGToolkit.GrammarDefinition.Readers.VerilogEBNF
+namespace CFGToolkit.GrammarDefinition.Readers.BNF
 {
     public class GrammarParsers
     {
