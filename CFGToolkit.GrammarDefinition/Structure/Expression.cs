@@ -5,6 +5,8 @@ namespace CFGToolkit.GrammarDefinition.Structure
 {
     public class Expression : IEnumerable<ISymbol>
     {
+        public Dictionary<string, string> Tags { get; set; } = new Dictionary<string, string>();
+
         public Expression(params object[] symbols)
         {
             foreach (var symbol in symbols)
