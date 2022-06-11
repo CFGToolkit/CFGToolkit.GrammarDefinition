@@ -10,7 +10,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Finders
             var result = new Dictionary<string, HashSet<string>>();
 
             result[grammar.Start] = new HashSet<string>() { null };
-            var firsts = new FirstSetFinder().FindFirst(grammar);
+            var firsts = new FirstSetFinder().FindFirst(grammar, true);
 
             var queue = new Queue<string>();
             var visited = new HashSet<string>();

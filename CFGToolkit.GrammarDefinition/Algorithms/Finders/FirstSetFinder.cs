@@ -1,40 +1,36 @@
 ﻿using CFGToolkit.GrammarDefinition.Structure;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CFGToolkit.GrammarDefinition.Algorithms.Finders
 {
     public class FirstSetFinder
     {
-        public Dictionary<string, HashSet<string>> FindFirst(Grammar grammar)
+        public Dictionary<string, Dictionary<int, HashSet<string>>> FindFirstByAlternatives(Grammar grammar, bool includePattern = false)
         {
-            var result = new Dictionary<string, HashSet<string>>();
+            var result = new Dictionary<string, Dictionary<int, HashSet<string>>>();
 
             foreach (var productionName in grammar.Productions.Keys)
             {
-                result[productionName] = FindFirst(grammar, productionName, new HashSet<string>());
+                result[productionName] = FindFirst(grammar, productionName, new HashSet<string>(), includePattern);
             }
 
             return result;
         }
 
-        public HashSet<string> FindFirst(Grammar grammar, string productionName)
+        public Dictionary<string, HashSet<string>> FindFirst(Grammar grammar, bool includePattern = false)
         {
-            return FindFirst(grammar, productionName, new HashSet<string>());
-        }
+            var tmp = FindFirstByAlternatives(grammar, includePattern);
+            var result = new Dictionary<string, HashSet<string>>();
 
-        private HashSet<string> FindFirst(Grammar grammar, string productionName, HashSet<string> visited)
-        {
-            var result = new HashSet<string>();
-            var production = grammar.Productions[productionName];
-            visited.Add(productionName);
-
-            for (var i = 0; i < production.Alternatives.Count; i++)
+            foreach (var productionName in grammar.Productions.Keys)
             {
-                var expression = production.Alternatives[i];
+                result[productionName] = new HashSet<string>();
 
-                HashSet<string> tmp = FindFirst(grammar, expression, visited);
-
-                Merge(result, tmp);
+                foreach (var set in tmp[productionName].Values)
+                {
+                    Merge(result[productionName], set);
+                }
 
             }
 
@@ -52,12 +48,23 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Finders
             }
         }
 
-        public HashSet<string> FindFirst(Grammar grammar, Expression expression)
+        private Dictionary<int, HashSet<string>> FindFirst(Grammar grammar, string productionName, HashSet<string> visited, bool includePattern = false)
         {
-            return FindFirst(grammar, expression, new HashSet<string>());
-        }
+            var result = new Dictionary<int, HashSet<string>>();
+            var production = grammar.Productions[productionName];
+            visited.Add(productionName);
 
-        private HashSet<string> FindFirst(Grammar grammar, Expression expression, HashSet<string> visited)
+            for (var i = 0; i < production.Alternatives.Count; i++)
+            {
+                var expression = production.Alternatives[i];
+
+                HashSet<string> tmp = FindFirst(grammar, expression, visited, includePattern);
+                result[i] = tmp;
+            }
+
+            return result;
+        }
+        private HashSet<string> FindFirst(Grammar grammar, Expression expression, HashSet<string> visited, bool includePattern)
         {
             var result = new HashSet<string>();
 
@@ -71,7 +78,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Finders
                     Merge(result, tmp);
                 }
 
-                tmp = FindFirst(grammar, expression, i, visited);
+                tmp = FindFirst(grammar, expression, i, visited, includePattern);
 
                 i++;
             }
@@ -82,11 +89,11 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Finders
             return result;
         }
 
-        private HashSet<string> FindFirst(Grammar grammar, Expression expression, int i, HashSet<string> visited)
+        private HashSet<string> FindFirst(Grammar grammar, Expression expression, int i, HashSet<string> visited, bool includePattern)
         {
             var result = new HashSet<string>();
 
-            if (expression.Symbols[i] is Literal or Pattern)
+            if (expression.Symbols[i] is Literal || includePattern && expression.Symbols[i] is Pattern)
             {
                 result.Add(expression.Symbols[i].ToString());
             }
@@ -94,13 +101,13 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Finders
             if (expression.Symbols[i] is ProductionIdentifier p && !visited.Contains(p.Value))
             {
                 var tmp = FindFirst(grammar, p.Value, visited);
-                Merge(result, tmp);
+                Merge(result, tmp.Values.First());
             }
 
             if (expression.Symbols[i] is ManyExpression m && m.Inside.Count == 1 && m.Inside[0].Symbols[0] is ProductionIdentifier p2 && !visited.Contains(p2.Value))
             {
                 var tmp = FindFirst(grammar, p2.Value, visited);
-                Merge(result, tmp);
+                Merge(result, tmp.Values.First());
 
                 if (!result.Contains(null))
                 {
@@ -111,7 +118,7 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Finders
             if (expression.Symbols[i] is OptionalExpression o && o.Inside.Count == 1 && o.Inside[0].Symbols[0] is ProductionIdentifier p3 && !visited.Contains(p3.Value))
             {
                 var tmp = FindFirst(grammar, p3.Value, visited);
-                Merge(result, tmp);
+                Merge(result, tmp.Values.First());
 
                 if (!result.Contains(null))
                 {
