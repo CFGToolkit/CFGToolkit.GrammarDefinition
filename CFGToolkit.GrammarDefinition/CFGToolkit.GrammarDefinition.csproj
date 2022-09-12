@@ -13,11 +13,11 @@
     <PackageTags>parser csharp grammar cfg grammar-parser</PackageTags>
     <Authors>Marcin Gołębiowski</Authors>
     <Company>CFGToolkit</Company>
-    <Version>1.0.0-beta-04</Version>
+    <Version>1.0.0-beta-05</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CFGToolkit.ParserCombinator" Version="1.0.0-beta-19" />
+    <PackageReference Include="CFGToolkit.ParserCombinator" Version="1.0.0-beta-24" />
   </ItemGroup>
 
 </Project>

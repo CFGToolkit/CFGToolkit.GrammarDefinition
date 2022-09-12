@@ -46,6 +46,8 @@ namespace CFGToolkit.GrammarDefinition.Algorithms.Reductions
                         }
                         result.Add(restProduction);
 
+                        production.Tags["reverse"] = "expand_children";
+
                         production.Alternatives = new Alternatives(new Expression(new ProductionIdentifier(productionName + "_prefix"), new ProductionIdentifier(productionName + "_rest")));
                     }
                 }
